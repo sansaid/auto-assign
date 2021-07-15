@@ -1,5 +1,5 @@
 import { Context } from 'probot'
-import { includesSkipKeywords, chooseAssignees, chooseReviewers } from './util'
+import { includesSkipKeywords, chooseAssignees, chooseReviewers, sendSlackDms } from './util'
 
 export interface Config {
   addReviewers: boolean
@@ -76,8 +76,11 @@ export async function handlePullRequest(context: Context): Promise<void> {
 
       if (assignees.length > 0) {
         const params = context.issue({ assignees })
-        const result = await context.octokit.issues.addAssignees(params)
-        context.log(result)
+        const resultAssignees = await context.octokit.issues.addAssignees(params)
+        context.log(resultAssignees)
+
+        const resultSlack = await sendSlackDms(assignees, context.octokit)
+        context.log(resultSlack);
       }
     } catch (error) {
       context.log(error)

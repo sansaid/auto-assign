@@ -1,5 +1,9 @@
 import _ from 'lodash'
+import { ProbotOctokit } from 'probot'
 import { Config } from './handler'
+import { WebClient } from '@slack/web-api'
+
+const web = new WebClient(process.env.SLACK_BOT_TOKEN)
 
 interface ChooseUsersResponse {
   teams: string[]
@@ -138,4 +142,12 @@ export function includesSkipKeywords(
   }
 
   return false
+}
+
+export function sendSlackDms(
+  assignees: string[],
+  octokit: ProbotOctokit
+): string {
+  for assignees 
+  web.users.lookUpByEmail(email)
 }
