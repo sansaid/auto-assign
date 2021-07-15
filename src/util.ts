@@ -148,6 +148,8 @@ export function sendSlackDms(
   assignees: string[],
   octokit: ProbotOctokit
 ): string {
-  for assignees 
-  web.users.lookUpByEmail(email)
+  assignees.forEach((assignee) =>{
+
+    web.users.lookUpByEmail(assignee)
+  })
 }
